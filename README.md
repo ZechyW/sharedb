@@ -133,6 +133,7 @@ Register a new middleware.
   * `'after submit'`: An operation was successfully submitted to
     the database.
   * `'receive'`: Received a message from a client
+  * **(ZW)** `'transform'`: About to catch up an operation submitted against an old document version (by transforming it against all the intervening operations up until the current document version).
 * `fn` _(Function(request, callback))_
   Call this function at the time specified by `action`.
   `request` contains a subset of the following properties, as relevant for the action:
@@ -269,6 +270,8 @@ Apply operation to document and send it to the server.
 [operations for the default `'ot-json0'` type](https://github.com/ottypes/json0#summary-of-operations).
 Call this after you've either fetched or subscribed to the document.
 * `options.source` Argument passed to the `'op'` event locally. This is not sent to the server or other clients. Defaults to `true`.
+* **(ZW)** `options.docVersion` Manually specifies the document version to submit the operation against.
+* **(ZW)** `options.opSrc`, `options.opSeq` Manually specifies the client ID/sequence counter that serve as the "fingerprint" for the operation.  
 
 `doc.del([options][, function(err) {...}])`
 Delete the document locally and send delete operation to the server.
